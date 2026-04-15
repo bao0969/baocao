@@ -8,6 +8,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [isLoginModalVisible, setLoginModalVisible] = useState(false);
 
   // --- PHẦN KHỞI TẠO ---
   useEffect(() => {
@@ -87,6 +88,7 @@ export const AuthProvider = ({ children }) => {
         });
         return true;
       }
+      return false;
     } catch (error) {
       console.log('Lỗi Native:', error);
       Alert.alert('Lỗi', 'Cần chạy trên máy thật để test tính năng này');
@@ -108,14 +110,14 @@ export const AuthProvider = ({ children }) => {
   const loginZalo = async () => { 
       return new Promise((resolve) => {
         setTimeout(() => {
-          setUser({ name: 'Bảo Zalo', avatar: 'https://s120-ava-talk.zadn.vn/c/5/f/0/1/120/12345.jpg', type: 'zalo' });
+          setUser({ name: 'Người dùng Zalo', avatar: 'https://s120-ava-talk.zadn.vn/c/5/f/0/1/120/12345.jpg', type: 'zalo' });
           resolve(true);
         }, 1000);
       });
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, loginFacebook, loginZalo, logout }}>
+    <AuthContext.Provider value={{ user, login, loginFacebook, loginZalo, logout, isLoginModalVisible, setLoginModalVisible }}>
       {children}
     </AuthContext.Provider>
   );
